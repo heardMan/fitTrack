@@ -20,6 +20,15 @@
 <h2 id='about'>About</h2>
 <p>fitTrack is a mobile-first react based front end application designed to act as a user interface for the fitStat API</p>
 
+<h3>Dependencies</h3>
+
+<ul>
+<li>React</li>
+<li>Auth0</li>
+<li>fitStatAPI</li>
+</ul>
+
+
 <h2 id='roadmap'>Road Map</h2>
 
 <ul>
