@@ -1,5 +1,5 @@
 /**
- * @name Header
+ * @name Header.js
  * @author Mark Heard
  * @version 1.0
  * @copyright 2021
