@@ -1,31 +1,96 @@
-/* ensure the main app container is at full height 
-so that the background can be changed by the dark and light modes in App.js*/
+/** 
+* STYLING IN THIS FILE FOLLOWS THE FOLLOWING FORMAT:
+* TAG, OR-TAGS {
+*  POSITION: ATTRIBUTES;
+*  POSITION: DETAILS;
+*
+*  SIZE: ATRIBUTES;
+*  SIZE: DETIALS;
+*  EXAMPLE: ETC;
+*
+*  STYLING: ATTRIBUTES;
+*  MORE: STYLING;
+*  STYLING:DETAILS;
+*
+*  MORE: ETC;
+* }
+*
+* MAIN COLORS FOR THE APPLICATION
+*
+* SPACE - #2E3131
+* SMOOTHE BLUE - #1B77D3
+* SMOOTHE GREY - #DADFE1
+*
+*/
+
+/**
+ * ensure the main app container is at full height
+ * so that the background can be changed by the dark and light modes in App.js
+ */
 #app {
   height:100%;
 }
 
-/* this class controls the color scheme of the light mode controlled in App.js*/
+/**
+ * this class controls the color scheme of the light mode controlled in App.js
+ */
 .light {
   background-color: #DADFE1;
   color: #2E3131;
 }
 
-/* this class controls the color scheme of the dark mode controlled in App.js*/
+/**
+ * this class controls the color scheme of the dark mode controlled in App.js
+ */
 .dark {
   background-color: #2E3131;
   color: #DADFE1;
 }
 
-/* this controls the styling for the main application header in Header.js*/
+/**
+ * this controls the styling for the main application header in Header.js
+ */
 header{
   background-color: #1B77D3;
   padding: 1rem;
 }
 
-/* this controls the styling for the main application header logo in Header.js */
+/**
+ * this controls the styling for the main application header logo in Header.js
+ */
 #header-logo {
   margin-left: auto;
   margin-right: auto;
+
   max-height: 50px;
 }
 
+/**
+ * this controls the styling for the main application nav in Nav.js
+ */
+nav {
+  position: fixed;
+  bottom:25px;
+  right:25px;
+
+  width: 65px;
+  height: 65px;
+
+  background-color: #1B77D3;
+  border: solid #DADFE1 2px;
+  border-radius: 50%;
+}
+
+/**
+ * this controls the styling for the menu-icon in Nav.js
+ */
+#menu-icon {
+  position: absolute;
+  top:25%;
+  right:25%;
+
+  width:50%;
+  height:50%;
+  transform: scale(1.15);
+}
+  

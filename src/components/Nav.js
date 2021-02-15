@@ -6,6 +6,8 @@
  * @component A simple navigation comoponent used to display a title logo
  */
 
+ import menuIcon from "../menu-white-18dp.svg";
+
 const Nav = () => {
 
     return (
@@ -19,7 +21,7 @@ const Nav = () => {
                 //that will toggle a menu containing links for navigating the application 
             }
 
-            
+            <img id='menu-icon' src={menuIcon} alt='hamburger menu icon'/>
 
         </nav>
 
