@@ -1,3 +1,26 @@
-body{
-  margin: 0px;
+#app {
+  height:100%;
 }
+
+.light {
+  background-color: #DADFE1;
+  color: #2E3131;
+}
+
+.dark {
+  background-color: #2E3131;
+  color: #DADFE1;
+}
+
+header{
+  background-color: #1B77D3;
+  padding: 1rem;
+}
+
+#header-logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 50px;
+}
+
