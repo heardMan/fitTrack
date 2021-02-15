@@ -24,7 +24,7 @@
 
 <ul>
 <li>React</li>
-<li>Auth0</li>
+<li>React-Dom-Router</li>
 <li>fitStatAPI</li>
 </ul>
 

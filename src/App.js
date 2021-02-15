@@ -1,5 +1,8 @@
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Header from "./components/Header.js";
 import Nav from "./components/Nav.js";
+import Home from "./views/Home.js";
+import SignIn from "./views/SignIn.js";
 import './App.css';
 
 /**
@@ -14,10 +17,19 @@ import './App.css';
 
 function App() {
   return (
-    <div id='app' className='dark'>
-      <Header/>
-      <Nav/>
-    </div>
+    <Router>
+      <div id='app' className='dark'>
+        <Header />
+        <Nav />
+        <main>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/signin" component={SignIn} />
+            <Route render={() => <Home/>} />
+          </Switch>
+        </main>
+      </div>
+    </Router>
   );
 }
 

@@ -50,7 +50,7 @@
 /**
  * this controls the styling for the main application header in Header.js
  */
-header{
+#header{
   background-color: #1B77D3;
   padding: 1rem;
 }
@@ -68,7 +68,7 @@ header{
 /**
  * this controls the styling for the main application nav in Nav.js
  */
-nav {
+#nav-toggle{
   position: fixed;
   bottom:25px;
   right:25px;
@@ -84,7 +84,7 @@ nav {
 /**
  * this controls the styling for the menu-icon in Nav.js
  */
-#menu-icon {
+#nav-status-icon {
   position: absolute;
   top:25%;
   right:25%;

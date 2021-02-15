@@ -15,7 +15,7 @@ const Header = () => {
 
         // a header tag is returned as the parent element to keep HTML semantic
 
-        <header>
+        <header id='header'>
 
             {
                 //an img tag is added to display the logo
