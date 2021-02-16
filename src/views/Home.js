@@ -6,25 +6,23 @@
  * @view A home view for the fitTrack application
  */
 
-
 const Home = () => {
-
+    
     return (
-
-        // a parent node with the id of home is returned with in the main tag of the application
-
+        //return a parent node with the id of home is returned with
+        //in the main tag of the application
         <div id='home'>
             <p>testing home</p>
+            <p>if this is displaying you are logged in!</p>
 
             {
-                //We want to return different content depending on whether the user
-                //is logged in or not
+                //present a general page broken up into sections
+                //one for each category of action maybe this could 
+                //also be a good place for notifications and messages
             }
 
-           
-
         </div >
-
+        
     );
 
 }

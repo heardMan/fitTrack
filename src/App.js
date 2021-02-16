@@ -1,10 +1,3 @@
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import Header from "./components/Header.js";
-import Nav from "./components/Nav.js";
-import Home from "./views/Home.js";
-import SignIn from "./views/SignIn.js";
-import './App.css';
-
 /**
  * @name App.js
  * @author Mark Heard
@@ -15,18 +8,56 @@ import './App.css';
  * 
  */
 
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import Header from "./components/Header.js";
+import Nav from "./components/Nav.js";
+import Home from "./views/Home.js";
+import './App.css';
+
+//Import react library with useState hook for testing purposes.
+import React, { useState, Fragment } from 'react';
+
+//import the SignIn component to render in the case that requester is not logged in
+import SignIn from "./components/SignIn.js";
+
+//import the SignUp component to render in the case that requester is not logged in
+import SignUp from "./components/SignUp.js";
+
+//import the SignIn component to render in the case that requester is not logged in
+import Register from "./components/Register.js";
+
 function App() {
+
+  //temporary state variables used to mimic authentication protocols
+  const [signedIn, setSignedIn] = useState(false);
+
   return (
     <Router>
+      {
+        /**
+         * DARK/LIGHT THEME CONTROLLED BY CLASSNAMES: 'light' & 'dark'
+         */
+      }
       <div id='app' className='dark'>
         <Header />
         <Nav />
         <main>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/signin" component={SignIn} />
-            <Route render={() => <Home/>} />
-          </Switch>
+          {
+            //if the visitor is SIGNED IN render any of the following
+            //components upon request
+            signedIn ?
+              <Switch>
+                <Route path="/" exact component={Home} />
+                <Route render={() => <Home />} />
+              </Switch>
+              :
+              //if the visitoe is NOT SIGNED IN
+              //prompt them to register or sign in
+              <Switch>
+                <Route path="/register" exact component={Register} />
+                <Route render={() => <><SignUp /><SignIn /></>} />
+              </Switch>
+          }
         </main>
       </div>
     </Router>

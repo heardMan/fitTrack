@@ -1,26 +1,29 @@
 /**
- * @name SignIn.js
+ * @name Register.js
  * @author Mark Heard
  * @version 1.0
  * @copyright 2021
  * @view A home view for the fitTrack application
  */
 
+import { Link } from "react-router-dom";
 
-const SignIn = () => {
+const Register = () => {
 
     return (
 
         // a parent node with the id of sign-in is returned with in the main tag of the application
 
-        <div id='sign-in'>
-            <p>testing sign in</p>
+        <div id='register'>
+            <p>testing Register</p>
 
             {
                 //comment
             }
 
-           
+            <Link to="/">back</Link>
+
+
 
         </div >
 
@@ -29,4 +32,4 @@ const SignIn = () => {
 }
 
 //ES6 export statement
-export default SignIn;
+export default Register;

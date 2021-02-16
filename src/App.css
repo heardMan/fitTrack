@@ -93,4 +93,64 @@
   height:50%;
   transform: scale(1.15);
 }
+
+/**
+ * this controls the styling for the sign up component in SignUp.js
+ */
+#sign-up {
+  text-align: center;
+}
+
+#sign-up > div {
+  width: 250px;
+  margin-right: auto;
+  margin-left: auto;
+
+}
+
+#sign-up > div > a {
+  display: block;
   
+  border-radius: 10px;
+  padding: 1rem;
+  font-size: 1rem;
+
+  text-decoration: none;
+  color: #DADFE1;
+  background-color: #1B77D3;
+  border: none;
+}
+
+#sign-in {
+  width: 250px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#sign-in > .form-field {
+  width: 250px;
+}
+
+#sign-in > div > input[type='email'],
+input[type='password'] {
+  display:block;
+  width: 246px;
+  border-radius: 10px;
+  height: 40px;
+  font-size: 1rem;
+  
+  background-color: #4A4F4F;
+  border: none;
+}
+
+#sign-in > div > input[type='submit'] {
+  width: 100%;
+
+  border-radius: 10px;
+  padding: 1rem;
+  font-size: 1rem;
+
+  color: #DADFE1;
+  background-color: #1B77D3;
+  border: none;
+}

@@ -6,7 +6,7 @@
  * @component A simple navigation comoponent used to display a title logo
  */
 
-//Import react library with useEffect and useState hooks.
+//Import react library with useState hook and Fragment component.
 import React, { useState, Fragment } from 'react';
 
 //Import menu icon to display on nav toggle when closed
@@ -38,7 +38,7 @@ const Nav = () => {
                 //if display is true return
                 //a menu with set of links
                 //a button that displays the close icon
-                //using the short hand React fragment notation
+                //using the short-hand React fragment notation
                 <>
                     <button id='nav-toggle' onClick={toggle}>
                         <img id='nav-status-icon' src={closeIcon} alt='hamburger menu icon'/>
