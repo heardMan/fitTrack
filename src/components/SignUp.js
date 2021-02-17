@@ -19,8 +19,8 @@ const SignUp = () => {
                 //comment
             }
 
-            <p>Don't have an account?</p>
-            <div><Link to="/register">Sign Up</Link></div>
+            <p><strong>Don't have an account?</strong></p>
+            <div><Link to="/register"><strong>Sign Up</strong></Link></div>
 
             
 

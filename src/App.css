@@ -69,6 +69,7 @@
  * this controls the styling for the main application nav in Nav.js
  */
 #nav-toggle{
+  z-index: 1000;
   position: fixed;
   bottom:25px;
   right:25px;
@@ -95,10 +96,54 @@
 }
 
 /**
+ * this controls the styling for the menu-icon in Nav.js
+ */
+ #nav-menu {
+   position: fixed;
+   right: 0px;
+   bottom: 0px;
+   
+   
+   border-radius: 50%;
+   /* border: solid #DADFE1 2px; */
+   transform: translate(50%,50%);
+   background: rgb(46,49,49);
+   background: radial-gradient(circle, rgba(46,49,49,1) 30%, rgba(27,119,211,1) 70%);
+   
+ }
+
+ .open {
+  width: 500px!important;
+  height: 500px!important;
+  transition-duration: 2s;
+ }
+
+ .close {
+  width: 0px!important;
+  height: 0px!important;
+  transition-duration: 2s;
+ }
+
+
+ @keyframes grow {
+   0% {
+     width:0px;
+     height:0px;
+   }
+   100% {
+     width:500px;
+     height:500px;
+   }
+ }
+
+ 
+
+/**
  * this controls the styling for the sign up component in SignUp.js
  */
 #sign-up {
   text-align: center;
+  margin-top: 1rem;
 }
 
 #sign-up > div {
@@ -121,29 +166,36 @@
   border: none;
 }
 
-#sign-in {
+#sign-in, #register {
   width: 250px;
   margin-right: auto;
   margin-left: auto;
+  margin-top: 3rem;
 }
 
-#sign-in > .form-field {
+#sign-in > .form-field, #register > .form-field {
   width: 250px;
+  margin-bottom: 1rem;
+  
 }
 
 #sign-in > div > input[type='email'],
-input[type='password'] {
+#sign-in > div > input[type='password'],
+#register > div > input[type='email'],
+#register > div > input[type='password'] {
   display:block;
   width: 246px;
   border-radius: 10px;
   height: 40px;
   font-size: 1rem;
-  
+
+  color: #DADFE1;
   background-color: #4A4F4F;
   border: none;
 }
 
-#sign-in > div > input[type='submit'] {
+#sign-in > div > button,
+#register > div > button {
   width: 100%;
 
   border-radius: 10px;

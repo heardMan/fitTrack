@@ -23,25 +23,23 @@ const SignIn = () => {
             {
                 //comment
             }
-
-            
-
                 <div className='form-field'>
                     <label>email</label>
-                    <input type='email' value={email} onChange={e=>setEmail(e.target.value)} />
+                    <input type='email' value={email} placeholder='email' onChange={e=>setEmail(e.target.value)} />
                 </div>
 
                 <div className='form-field'>
                     <label>password</label>
-                    <input type='password' value={password} onChange={e=>setPassword(e.target.value)} />
+                    <input type='password' value={password} placeholder='password' onChange={e=>setPassword(e.target.value)} />
                 </div>
 
                 <div className='form-field'>
-                    <input type='submit' value='Sign In' />
+                    {/* <input type='submit' value='Sign In' /> */}
+                    <button onClick={e=>{
+                        e.preventDefault();
+                        console.log('click')
+                    }}><strong>Sign In</strong></button>
                 </div>
-
-            
-
         </form >
 
     );
