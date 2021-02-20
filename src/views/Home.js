@@ -6,6 +6,7 @@
  * @view A home view for the fitTrack application
  */
 
+import LogOutBtnAuth0 from "../components/LogOutBtnAuth0.js";
 const Home = () => {
     
     return (
@@ -14,6 +15,8 @@ const Home = () => {
         <div id='home'>
             <p>testing home</p>
             <p>if this is displaying you are logged in!</p>
+            <LogOutBtnAuth0/>
+
 
             {
                 //present a general page broken up into sections
