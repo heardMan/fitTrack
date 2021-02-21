@@ -27,7 +27,7 @@
  * ensure the main app container is at full height
  * so that the background can be changed by the dark and light modes in App.js
  */
-#app {
+#app-container {
   height:100%;
 }
 

@@ -3,60 +3,69 @@
  * @author Mark Heard
  * @version 1.0
  * @copyright 2021
- * @application The main Application logic and architecture is 
+ * @application The main Application UI and Routing logic is 
  * determined by this file and it's descendents
- * 
  */
-
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
-import Header from "./components/Header.js";
-import Nav from "./components/Nav.js";
-import Home from "./views/Home.js";
-import './App.css';
-import { useAuth0 } from "@auth0/auth0-react";
 
 //Import react library with useState hook for testing purposes.
 import React, { useState, Fragment } from 'react';
 
-//import the SignIn component to render in the case that requester is not logged in
-import SignIn from "./components/SignIn.js";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+//import { createBrowserHistory } from 'history';
+import { useAuth0 } from "@auth0/auth0-react";
 
-//import the SignUp component to render in the case that requester is not logged in
-import SignUp from "./components/SignUp.js";
+import ProtectedRoute from "./components/ProtectedRoute.js";
 
-//import the SignIn component to render in the case that requester is not logged in
-import Register from "./components/Register.js";
+import Loading from "./components/Loading.js";
+import Header from "./components/Header.js";
+import Nav from "./components/Nav.js";
+import Footer from "./components/Footer.js";
+
+import About from "./views/About.js";
+import Contact from "./views/Contact.js";
+import Exercises from "./views/Exercises.js";
+import Home from "./views/Home.js";
+import Menu from "./views/Menu.js";
+import Settings from "./views/Settings.js";
+import UserWorkouts from "./views/UserWorkouts.js";
+import Workouts from "./views/Workouts.js";
+
+import './App.css';
+
+//export const history = createBrowserHistory();
 
 function App() {
 
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const { isLoading, error } = useAuth0();
 
-  //temporary state variables used to mimic authentication protocols
-  const [signedIn, setSignedIn] = useState(false);
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
-    <Router>
-      {
-        /**
-         * DARK/LIGHT THEME CONTROLLED BY CLASSNAMES: 'light' & 'dark'
-         */
-      }
-      <div id='app' className='dark'>
+    <Router >
+      <div id='app-container' className='dark'>
         <Header />
         <Nav />
         <main>
-          {
-            //if the visitor is SIGNED IN render any of the following
-            //components upon request
-          }
           <Switch>
-            <Route path="/" exact render={()=><div>home</div>} />
-            <Route path="/about" exact render={()=><div>about</div>} />
-            <Route path="/" exact render={()=><div>contact</div>} />
+            {/* Public Routes */}
+            <Route path="/" exact component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
+            {/* Protected Routes */}
+            
+            <ProtectedRoute path="/menu" component={Menu} />
+            <ProtectedRoute path="/exercises" component={Exercises} />
+            <ProtectedRoute path="/workouts" component={Workouts} />
+            <ProtectedRoute path="/userworkouts" component={UserWorkouts} />
+            <ProtectedRoute path="/settings" component={Settings} />
           </Switch>
         </main>
+        <Footer />
       </div>
     </Router>
+
   );
 }
 

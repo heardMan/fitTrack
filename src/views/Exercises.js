@@ -1,19 +1,21 @@
 /**
- * @name Home.js
+ * @name Exercises.js
  * @author Mark Heard
  * @version 1.0
  * @copyright 2021
  * @view A home view for the fitTrack application
  */
 
-const Home = () => {
+import Logout from "../components/LogOutBtnAuth0.js";
+
+const Exercises = () => {
     
     return (
         //return a parent node with the id of home is returned with
         //in the main tag of the application
-        <div id='home'>
-            <p>home page</p>
-            <p>you are NOT logged in</p>
+        <div id='exercises'>
+            <p>exercises page</p>
+            <p>you are LOGGED IN</p>
         </div >
         
     );
@@ -21,4 +23,6 @@ const Home = () => {
 }
 
 //ES6 export statement
-export default Home;
+//export default Exercises;
+
+export default Exercises;

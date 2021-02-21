@@ -9,6 +9,8 @@
 //Import react library with useState hook and Fragment.
 import React, { useState, Fragment } from 'react';
 
+import { Link } from "react-router-dom";
+
 //Import menu icon to display on nav toggle when closed
 import menuIcon from "../menu-white-18dp.svg";
 //Import menu icon to display on nav toggle when closed
@@ -46,9 +48,15 @@ const Nav = () => {
 
                     <div id='nav-menu' className='open'>
 
-                    <div>Home</div>
-                    <div>Contact</div>
-                    <div>About</div>
+                    <div><Link to="/">Home</Link></div>
+                    <div><Link to="/contact">Contact</Link></div>
+                    <div><Link to="/about">About</Link></div>
+                    <div><Link to="/contact">Contact</Link></div>
+                    <div><Link to="/exercises">Exercises</Link></div>
+                    <div><Link to="/menu">Menu</Link></div>
+                    <div><Link to="/settings">Settings</Link></div>
+                    <div><Link to="/userworkouts">User Workouts</Link></div>
+                    <div><Link to="/workouts">Workouts</Link></div>
 
                     </div>
                 </>
@@ -60,9 +68,15 @@ const Nav = () => {
                     </button>
                     <div id='nav-menu' className='close'>
 
-                    <div>Home</div>
-                    <div>Contact</div>
-                    <div>About</div>
+                    <div><Link to="/">Home</Link></div>
+                    <div><Link to="/contact">Contact</Link></div>
+                    <div><Link to="/about">About</Link></div>
+                    <div><Link to="/contact">Contact</Link></div>
+                    <div><Link to="/exercises">Exercises</Link></div>
+                    <div><Link to="/menu">Menu</Link></div>
+                    <div><Link to="/settings">Settings</Link></div>
+                    <div><Link to="/userworkouts">User Workouts</Link></div>
+                    <div><Link to="/workouts">Workouts</Link></div>
 
                     </div>
                 </>
