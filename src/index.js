@@ -25,6 +25,7 @@ import reportWebVitals from './reportWebVitals';
         domain={process.env.REACT_APP_AUTH0_DOMAIN}
         clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
         redirectUri={window.location.origin}
+        //audience={`fitStat`}
         //audience={process.env.REACT_APP_AUDIENCE}
         //scope="read:users"
         //onRedirectCallback={onRedirectCallback}

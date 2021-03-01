@@ -13,6 +13,7 @@ const Footer = () => {
         // a header tag is returned as the parent element to keep HTML semantic
 
         <footer id='footer'>
+            
 
            <p>copyright 2021</p>
 

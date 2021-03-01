@@ -6,7 +6,9 @@
  * @view A home view for the fitTrack application
  */
 
-import Logout from "../components/LogOutBtnAuth0.js";
+import SearchableList from "../components/SearchableList.js"
+
+import { Link } from "react-router-dom";
 
 const Exercises = () => {
     
@@ -14,8 +16,8 @@ const Exercises = () => {
         //return a parent node with the id of home is returned with
         //in the main tag of the application
         <div id='exercises'>
-            <p>exercises page</p>
-            <p>you are LOGGED IN</p>
+            <Link id='new-exercise-link' to='/newexercise'>new exercise</Link>
+            <SearchableList endpoint={'exercise_templates'}/>
         </div >
         
     );
