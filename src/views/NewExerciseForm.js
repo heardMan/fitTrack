@@ -7,12 +7,18 @@
  */
 
 import React, { useEffect, useState, Fragment } from 'react';
+import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import CustomTextInput from "../components/CustomTextInput.js";
 import CustomTextArea from "../components/CustomTextArea.js";
 
-const NewExerciseForm = () => {
+const NewExerciseForm = props => {
+    //props.mode - create or edit
+    //props.exercise
+
     const { getAccessTokenSilently } = useAuth0();
+
+    const [mode, setMode] = useState('create');
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -26,7 +32,24 @@ const NewExerciseForm = () => {
     const [mediaModalOpen, setMediaModalOpen] = useState(false);
     const [currentMedia, setCurrentMedia] = useState({ 'content': '', 'index': 0 });
 
+    const [errorMsg, setErrorMsg] = useState({'msg': '', 'code': null});
+    const [errorModalOpen, setErrorModalOpen] = useState(false);
+
+    const [successMsg, setSuccessMsg] = useState('');
+    const [successModalOpen, setSuccessModalOpen] = useState(false);
+
     const [apiData, setAPIData] = useState([]);
+
+    const resetForm = () => {
+        setName('');
+        setDescription('');
+        setInstructions([]);
+        setInstructionModalOpen(false);
+        setCurrentInstruction({ 'content': '', 'index': 0 });
+        setMedia([]);
+        setMediaModalOpen(false);
+        setCurrentMedia({ 'content': '', 'index': 0 });
+    }
 
     const updateCurrentMedia = (content, index) => setCurrentMedia({ 'content': content, 'index': index })
 
@@ -51,28 +74,28 @@ const NewExerciseForm = () => {
     const updateCurrentInstruction = (content, index) => setCurrentInstruction({ 'content': content, 'index': index })
 
     const saveInstruction = () => {
-        const newInstructions = [...instructions]
-        newInstructions[currentInstruction.index]={ 'content': currentInstruction.content, 'index': currentInstruction.index }
-        setInstructions(newInstructions)
+        const newInstructions = [...instructions];
+        newInstructions[currentInstruction.index]={ 'content': currentInstruction.content, 'index': currentInstruction.index };
+        setInstructions(newInstructions);
         setInstructionModalOpen(false);
         
     }
 
     const deleteInstruction = () => {
         setInstructionModalOpen(false);
-        const newInstructions = instructions.filter(instructionItem => instructionItem.index !== currentInstruction.index)
-        newInstructions.map((instruction,i)=>instruction.index=i)
-        setInstructions(newInstructions)
+        const newInstructions = instructions.filter(instructionItem => instructionItem.index !== currentInstruction.index);
+        newInstructions.map((instruction,i)=>instruction.index=i);
+        setInstructions(newInstructions);
     }
 
-    async function postData(url = '', data = {}) {
+    async function getData(url = '', data = {}, method = 'GET') {
         // Default options are marked with *
         const accessToken = await getAccessTokenSilently({
             audience: `fitStat`,
         });
 
         const response = await fetch(url, {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            method: method.toLocaleUpperCase(), // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             credentials: 'same-origin', // include, *same-origin, omit
@@ -83,16 +106,69 @@ const NewExerciseForm = () => {
             },
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify({
-                'name': name,
-                'description': description
-            }) // body data type must match "Content-Type" header
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
         });
         return response.json(); // parses JSON response into native JavaScript objects
     }
 
+    const createNewExercise = () => {
+        getData('http://localhost:5000/exercise_templates', { 'name': name, 'description': description }, 'POST')
+        .then(res => {
+            console.log(res); // JSON data parsed by `data.json()` call
+            if(res.success===true){
+                setSuccessMsg(`Exercise: ${res.new_exercise.name} Was Added Successfully`);
+                setSuccessModalOpen(true);
+            } else if (res.success===false){
+                setErrorMsg({'msg': res.message, 'code': res.error});
+                setErrorModalOpen(true);
+            }
+            
+        });
+    }
 
+    const updateExercise = () => {
+        getData(`http://localhost:5000/exercise_templates/${props.exercise.id}`, { 'name': name, 'description': description }, 'PATCH')
+        .then(res => {
+            console.log(res); // JSON data parsed by `data.json()` call
+            if(res.success===true){
+                setSuccessMsg(`Exercise: ${res.edited_exercise.name} Was Updated Successfully`);
+                setSuccessModalOpen(true);
+            } else if (res.success===false){
+                setErrorMsg({'msg': res.message, 'code': res.error});
+                setErrorModalOpen(true);
+            }
+            
+        });
+    }
 
+    const deleteExercise = () => {
+        getData(`http://localhost:5000/exercise_templates/${props.exercise.id}`, {}, 'DELETE')
+        .then(res => {
+            console.log(res); // JSON data parsed by `data.json()` call
+            if(res.success===true){
+                setSuccessMsg(`Exercise: ${res.deleted_exercise.name}||Was Deleted Successfully`);
+                setSuccessModalOpen(true);
+            } else if (res.success===false){
+                setErrorMsg({'msg': res.message, 'code': res.error});
+                setErrorModalOpen(true);
+            }
+            
+        });
+    }
+
+    useEffect(()=>{
+
+        if(props.exercise){
+            console.log(props)
+            if(props.exercise.name!==undefined){
+                setMode('edit');
+            setName(props.exercise.name);
+            setDescription(props.exercise.description);
+            }
+            
+        } 
+
+    },[props.exercise])
 
     return (
         //return a parent node with the id of home is returned with
@@ -102,6 +178,8 @@ const NewExerciseForm = () => {
 
                 {
                     //comment
+                    //console.log(props)
+                    
                 }
                 <div className='form-field'>
                     <CustomTextInput
@@ -124,9 +202,6 @@ const NewExerciseForm = () => {
                     />
 
                 </div>
-               
-
-
 
                 <div className='form-field'>
                     <h3>instructions</h3>
@@ -161,9 +236,6 @@ const NewExerciseForm = () => {
 
                 </div>
 
-
-
-
                 <div className='form-field'>
                     <h3>media</h3>
 
@@ -188,8 +260,8 @@ const NewExerciseForm = () => {
                             const newMediaItem = { 'content': '', 'index': media.length };
                             const newMedia = [...media, newMediaItem];
 
-                            setCurrentMedia(newMediaItem)
-                            setMedia(newMedia)
+                            setCurrentMedia(newMediaItem);
+                            setMedia(newMedia);
                             setMediaModalOpen(true);
 
                         }}
@@ -202,23 +274,37 @@ const NewExerciseForm = () => {
 
                     <button className='btn' onClick={e => {
                         e.preventDefault();
-                        postData('http://localhost:5000/exercise_templates')
-                            .then(data => {
-                                console.log(data); // JSON data parsed by `data.json()` call
-                            });
-                    }}><strong>Save Exercise</strong></button>
+                        mode === 'edit' ? updateExercise() : createNewExercise();
+                        
+                    }}><strong>{ mode === 'edit' ? 'Update Exercise' : 'Save Exercise' }</strong></button>
 
                 </div>
+
+                {
+                mode === 'edit' ? 
+
+                <div className='form-field'>
+
+                    <button className='delete btn' onClick={e => {
+                        e.preventDefault();
+                        deleteExercise();
+                        
+                    }}><strong>Delete Exercise</strong></button>
+
+                </div>
+
+                : 
+                null
+                }
             </form >
 
-
-            <div id='media-modal' className={mediaModalOpen ? 'open-media-modal' : 'closed-media-modal'}>
-                <div id='media-modal-content'>
+            <div id='modal' className={mediaModalOpen ? 'open-modal' : 'closed-modal'}>
+                <div id='modal-content'>
 
                     <h3>Media</h3>
 
                     <button
-                        id='close-media-modal'
+                        id='close-modal'
                         onClick={e => setMediaModalOpen(false)}>
                         x
                         </button>
@@ -249,19 +335,13 @@ const NewExerciseForm = () => {
 
             </div>
 
-
-
-
-
-
-
-            <div id='media-modal' className={instructionModalOpen ? 'open-media-modal' : 'closed-media-modal'}>
-                <div id='media-modal-content'>
+            <div id='modal' className={instructionModalOpen ? 'open-modal' : 'closed-modal'}>
+                <div id='modal-content'>
 
                     <h3>Instructions</h3>
 
                     <button
-                        id='close-media-modal'
+                        id='close-modal'
                         onClick={e => setInstructionModalOpen(false)}>
                         x
                         </button>
@@ -275,14 +355,14 @@ const NewExerciseForm = () => {
                     />
 
                     <button
-                        id='save-media'
+                        id='save-instruction'
                         className='btn'
                         onClick={saveInstruction}>
                         Save
                         </button>
 
                     <button
-                        id='delete-media'
+                        id='delete-instruction'
                         className='btn'
                         onClick={deleteInstruction}>
                         Delete
@@ -292,7 +372,59 @@ const NewExerciseForm = () => {
 
             </div>
 
+            <div id='modal' className={successModalOpen ? 'open-modal' : 'closed-modal'}>
+                <div id='modal-content'>
 
+                    <h3>Success</h3>
+
+                    <button
+                        id='close-modal'
+                        onClick={e => setSuccessModalOpen(false)}>
+                        x
+                        </button>
+
+                    <p>{successMsg}</p>
+
+                        <Link to='/exercises'>Back to Catalog</Link>
+
+                    <button
+                        id=''
+                        className='btn'
+                        onClick={e => {
+                            resetForm();
+                            setSuccessModalOpen(false);
+                            }}>
+                                {mode === 'edit' ? 'Make More Edits' : 'Add Another Exercise'}
+                        </button>
+
+                </div>
+
+            </div>
+
+            <div id='modal' className={errorModalOpen ? 'open-modal' : 'closed-modal'}>
+                <div id='modal-content'>
+
+                    <h3>Error</h3>
+
+                    <button
+                        id='close-modal'
+                        onClick={e => setErrorModalOpen(false)}>
+                        x
+                        </button>
+
+                    <p>{errorMsg.code}</p>
+                    <p>{errorMsg.msg}</p>
+
+                    <button
+                        id='save-instruction'
+                        className='btn'
+                        onClick={e => setErrorModalOpen(false)}>
+                        Ok
+                        </button>
+
+                </div>
+
+            </div>
 
         </>
 

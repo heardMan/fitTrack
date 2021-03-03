@@ -1,5 +1,5 @@
 /**
- * @name ExerciseCard.js
+ * @name EditExerciseForm.js
  * @author Mark Heard
  * @version 1.0
  * @copyright 2021
@@ -9,8 +9,11 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import NewExerciseForm from '../views/NewExerciseForm.js'
 
-const ExerciseCard = props => {
+const EditExerciseForm = props => {
+    //props.mode - create or edit
+    //props.exercise
 
     const { getAccessTokenSilently } = useAuth0();
 
@@ -51,10 +54,7 @@ const ExerciseCard = props => {
         // a header tag is returned as the parent element to keep HTML semantic
 
         <div className='exercise-card'>
-            <p>exercise card</p>
-            <p>{id}</p>
-            <p>{JSON.stringify(data)}</p>
-           
+            <NewExerciseForm exercise={data}/>
         </div >
 
     );
@@ -62,4 +62,4 @@ const ExerciseCard = props => {
 }
 
 //ES6 export statement
-export default ExerciseCard;
+export default EditExerciseForm;
