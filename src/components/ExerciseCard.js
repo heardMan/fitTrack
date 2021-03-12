@@ -9,12 +9,13 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import NewExerciseForm from '../views/NewExerciseForm.js'
+import ExerciseForm from '../views/ExerciseForm.js'
 
 const EditExerciseForm = props => {
     //props.mode - create or edit
     //props.exercise
 
+    //
     const { getAccessTokenSilently } = useAuth0();
 
     const [data, setData] = useState([]);
@@ -54,7 +55,7 @@ const EditExerciseForm = props => {
         // a header tag is returned as the parent element to keep HTML semantic
 
         <div className='exercise-card'>
-            <NewExerciseForm exercise={data}/>
+            <ExerciseForm exercise={data}/>
         </div >
 
     );

@@ -6,50 +6,38 @@
  * @component A simple header comoponent used to display a title logo
  */
 
-<Modal open={} title={} />
+import closeIcon from "../close-white-18dp.svg";
+
+{/* <Modal open={ } title={ } /> */ }
 
 const Modal = props => {
+
+    const close = e => {
+        e.preventDefault()
+        props.setOpen(false)
+    }
+
 
     return (
 
         // a header tag is returned as the parent element to keep HTML semantic
 
-        <div id='media-modal' className={props.open ? 'open-media-modal' : 'closed-media-modal'}>
-                <div id='media-modal-content'>
+        <div id='modal' className={props.open ? 'open-modal' : 'closed-modal'}>
+            
+            <div id='modal-content'>
 
-                    <h3>props.title</h3>
+                <button
+                    id='close-modal'
+                    onClick={close}>
+                    <img id='close-modal-icon' src={closeIcon} alt='close menu icon' />
 
-                    <button
-                        id='close-media-modal'
-                        onClick={e => setMediaModalOpen(false)}>
-                        x
-                        </button>
+                </button>
 
-                    <CustomTextInput
-                        type='text'
-                        name={`media-item-${currentMedia.index}`}
-                        label={`media item ${currentMedia.index}`}
-                        value={(currentMedia.content)}
-                        onChange={item => updateCurrentMedia(item, currentMedia.index)}
-                    />
-
-                    <button
-                        id='save-media'
-                        className='btn'
-                        onClick={saveMedia}>
-                        Save
-                        </button>
-
-                    <button
-                        id='delete-media'
-                        className='btn'
-                        onClick={deleteMedia}>
-                        Delete
-                        </button>
-
-                </div>
+                {props.children}
 
             </div>
+
+        </div>
 
     );
 

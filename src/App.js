@@ -30,7 +30,7 @@ import Menu from "./views/Menu.js";
 import Settings from "./views/Settings.js";
 import UserWorkouts from "./views/UserWorkouts.js";
 import Workouts from "./views/Workouts.js";
-import NewExerciseForm from "./views/NewExerciseForm.js";
+import ExerciseForm from "./views/ExerciseForm.js";
 
 import './App.css';
 
@@ -59,8 +59,8 @@ function App() {
             <ProtectedRoute path="/menu" component={Menu} />
 
             <ProtectedRoute path="/exercises" exact component={Exercises} />
-            <ProtectedRoute path="/newexercise" component={NewExerciseForm} />
-            <ProtectedRoute path="/exercises/:id" component={ExerciseCard} />
+            <ProtectedRoute path="/newexercise" component={ExerciseForm} />
+            <ProtectedRoute path="/exercises/:id" component={ExerciseForm} />
 
             <ProtectedRoute path="/workouts" component={Workouts} />
 

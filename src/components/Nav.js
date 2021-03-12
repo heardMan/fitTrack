@@ -43,7 +43,7 @@ const Nav = () => {
                 //using the short hand React fragment notation
                 <>
                     <button id='nav-toggle' onClick={toggle}>
-                        <img id='nav-status-icon' src={closeIcon} alt='hamburger menu icon'/>
+                        <img id='nav-status-icon' src={closeIcon} alt='close menu icon'/>
                     </button>
 
                     <div id='nav-menu' className='open'>
