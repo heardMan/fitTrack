@@ -40,43 +40,13 @@ const SearchableList = props => {
         return response.json(); // parses JSON response into native JavaScript objects
     }
 
-    function myFunction() {
-        // Declare variables
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                //this is the meat
-                txtValue = td.textContent || td.innerText;
-                //this IS the filter right here 
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    //display will be allowed 
-                    tr[i].style.display = "";
-                } else {
-                    // there wil be no display
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-
-    // const toggleFocus = () => {
-    //     if(query===true){
-    //         setQueryFocused(false)
-    //     }
-    //     setQueryFocused(true)
-    // }
-
     useEffect(() => {
-        getData('http://localhost:5000/exercise_templates')
-            .then(data => {
-                setData(data.exercises); // JSON data parsed by `data.json()` call
+        getData(`http://localhost:5000/${props.endpoint}`)
+            .then(res => {
+                if(res[props.responseKey]!==undefined){
+                    setData(res[props.responseKey]);
+                }
+                 // JSON data parsed by `data.json()` call
             });
     }, [])
 
@@ -92,7 +62,7 @@ const SearchableList = props => {
                 <CustomTextInput
                     type='text'
                     name='query'
-                    label='search exercises'
+                    label={`search ${props.title}`}
                     value={query}
                     onChange={setQuery}
                 />
@@ -102,13 +72,13 @@ const SearchableList = props => {
             <div>
                 {
                     query.length === 0 ?
-                        data.map((exercise, i) => {
-                            return (<Link key={i} className='search-list-item' to={`/exercises/${exercise.id}`}>{exercise.name}</Link>);
+                        data.map((item, i) => {
+                            return (<Link key={i} className='search-list-item' to={`/${props.title}/${item.id}`}>{item.name}</Link>);
                         })
                         :
-                        data.filter(exercise => exercise.name.toUpperCase().indexOf(query.toUpperCase()) > -1)
-                            .map((exercise, i) => {
-                                return (<Link key={i} className='search-list-item' to={`/exercises/${exercise.id}`}>{exercise.name}</Link>);
+                        data.filter(item => item.name.toUpperCase().indexOf(query.toUpperCase()) > -1)
+                            .map((item, i) => {
+                                return (<Link key={i} className='search-list-item' to={`/${props.title}/${item.id}`}>{item.name}</Link>);
                             })
                 }
             </div>

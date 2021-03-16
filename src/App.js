@@ -31,6 +31,7 @@ import Settings from "./views/Settings.js";
 import UserWorkouts from "./views/UserWorkouts.js";
 import Workouts from "./views/Workouts.js";
 import ExerciseForm from "./views/ExerciseForm.js";
+import WorkoutForm from "./views/WorkoutForm.js";
 
 import './App.css';
 
@@ -63,6 +64,8 @@ function App() {
             <ProtectedRoute path="/exercises/:id" component={ExerciseForm} />
 
             <ProtectedRoute path="/workouts" component={Workouts} />
+            <ProtectedRoute path="/newworkout" component={WorkoutForm} />
+            <ProtectedRoute path="/workouts/:id" component={WorkoutForm} />
 
             <ProtectedRoute path="/userworkouts" component={UserWorkouts} />
 

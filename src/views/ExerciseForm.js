@@ -14,11 +14,11 @@ import CustomTextArea from "../components/CustomTextArea.js";
 import CustomList from "../components/CustomList.js";
 import Modal from '../components/Modal.js';
 
-const NewExerciseForm = props => {
-    //props.mode - create or edit
-    //props.exercise
+const ExerciseForm = props => {
 
-    let {id} = useParams();
+    const modes = ['create','edit','delete']
+
+    let { id } = useParams();
 
     const { getAccessTokenSilently } = useAuth0();
 
@@ -28,7 +28,6 @@ const NewExerciseForm = props => {
     const [description, setDescription] = useState('');
     const [instructions, setInstructions] = useState([]);
     const [media, setMedia] = useState([]);
-
 
     const [errorMsg, setErrorMsg] = useState({ 'msg': '', 'code': null });
     const [errorModalOpen, setErrorModalOpen] = useState(false);
@@ -52,8 +51,8 @@ const NewExerciseForm = props => {
             audience: `fitStat`,
         });
 
-        const response = await fetch(url, {
-            method: method.toLocaleUpperCase(), // *GET, POST, PUT, DELETE, etc.
+        const params = {
+            method: method.toUpperCase(), // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             credentials: 'same-origin', // include, *same-origin, omit
@@ -64,9 +63,17 @@ const NewExerciseForm = props => {
             },
             redirect: 'follow', // manual, *follow, error
             referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
-        });
+            //body: JSON.stringify(data) // body data type must match "Content-Type" header
+        }
+
+        if (method.toUpperCase() !== 'GET') {
+            params.body = JSON.stringify(data);
+        }
+
+        const response = await fetch(url, params);
+
         return response.json(); // parses JSON response into native JavaScript objects
+
     }
 
     const createNewExercise = () => {
@@ -85,14 +92,16 @@ const NewExerciseForm = props => {
     }
 
     const readExercise = () => {
-        getData(`http://localhost:5000/exercise_templates/${id}`)
-                        .then(res => {
-                            console.log(res); // JSON data parsed by `data.json()` call
-                        });
+        getData(`http://localhost:5000/exercise_templates/${id}`, {}, 'GET')
+            .then(res => {
+                console.log(res); // JSON data parsed by `data.json()` call
+                setName(res.exercise.name)
+                setDescription(res.exercise.description)
+            });
     }
- 
+
     const updateExercise = () => {
-        getData(`http://localhost:5000/exercise_templates/${props.exercise.id}`, { 'name': name, 'description': description }, 'PATCH')
+        getData(`http://localhost:5000/exercise_templates/${id}`, { 'name': name, 'description': description }, 'PATCH')
             .then(res => {
                 console.log(res); // JSON data parsed by `data.json()` call
                 if (res.success === true) {
@@ -106,8 +115,9 @@ const NewExerciseForm = props => {
             });
     }
 
-    const deleteExercise = () => {
-        getData(`http://localhost:5000/exercise_templates/${props.exercise.id}`, {}, 'DELETE')
+    const deleteExercise = e => {
+        e.preventDefault();
+        getData(`http://localhost:5000/exercise_templates/${id}`, {}, 'DELETE')
             .then(res => {
                 console.log(res); // JSON data parsed by `data.json()` call
                 if (res.success === true) {
@@ -126,29 +136,40 @@ const NewExerciseForm = props => {
             });
     }
 
+    const saveExercise = e => {
+        e.preventDefault();
+        mode === 'edit' ? updateExercise() : createNewExercise();
+
+    }
+
+    const checkBeforeDelete = e => {
+        e.preventDefault();
+        setDeleteModalOpen(true);
+
+    }
+
     useEffect(() => {
-        //console.log(id)
-        if (props.exercise) {
-            console.log(props)
-            if (props.exercise.name !== undefined) {
-                setMode('edit');
-                setName(props.exercise.name);
-                setDescription(props.exercise.description);
-            }
+
+        if (id !== undefined) {
+
+            setMode('edit');
+            readExercise()
 
         }
 
-    }, [props.exercise])
+    }, [])
 
     return (
         //return a parent node with the id of home is returned with
         //in the main tag of the application
         <>
+
             <form id='new-exercise'>
 
                 {
                     //comment
                     console.log(mode)
+
 
                 }
 
@@ -200,31 +221,29 @@ const NewExerciseForm = props => {
 
                 <div className='form-field'>
 
-                    <button className='btn' onClick={e => {
-                        e.preventDefault();
-                        mode === 'edit' ? updateExercise() : createNewExercise();
-
-                    }}><strong>{'Save Exercise'}</strong></button>
+                    <button
+                        className='btn'
+                        onClick={saveExercise}>
+                        <strong>{'Save Exercise'}</strong>
+                    </button>
 
                 </div>
 
-                {
-                    mode === 'edit' ?
+                <div className='form-field' >
 
-                        <div className='form-field'>
+                    {/** 
+                     *@TODO - REMOVE MODE VARIABLE
+                     */}
 
-                            <button className='delete btn' onClick={e => {
-                                e.preventDefault();
-                                setDeleteModalOpen(true);
 
-                            }}><strong>Delete Exercise</strong></button>
+                    <button
+                        className={`delete btn ${mode !== 'create' ? null : 'hide'}`}
+                        onClick={checkBeforeDelete}>
+                        <strong>Delete Exercise</strong>
+                    </button>
 
-                        </div>
-
-                        :
-                        null
-                }
-            </form >
+                </div>
+            </form>
 
             <Modal open={successModalOpen} setOpen={setSuccessModalOpen}>
                 <h3>Success</h3>
@@ -233,24 +252,21 @@ const NewExerciseForm = props => {
 
                 <Link to='/exercises'>Back to Catalog</Link>
 
-                {mode !== 'delete' ?
+                <button
+                    //className={'btn' + mode === 'delete' ? 'hide' : null}
+                    className={`btn ${mode === 'delete' ? 'hide' : null}`}
+                    onClick={e => {
+                        resetForm();
+                        setSuccessModalOpen(false);
+                    }}>
 
-                    <button
-                        id=''
-                        className='btn'
-                        onClick={e => {
-                            resetForm();
-                            setSuccessModalOpen(false);
-                        }}>
 
-                        {
-                            mode === 'edit' ? 'Make More Edits' : 'Add Another Exercise'
-                        }
+                    {
+                        mode === 'edit' ? 'Make More Edits' : 'Add Another Exercise'
+                    }
 
-                    </button>
-                    :
-                    null
-                }
+                </button>
+
 
             </Modal>
 
@@ -278,16 +294,14 @@ const NewExerciseForm = props => {
                 <button
                     id='delete-instruction'
                     className='btn'
-                    onClick={e => {
-                        deleteExercise();
-                    }}>
+                    onClick={deleteExercise}>
                     Delete
                     </button>
 
                 <button
                     id='save-instruction'
                     className='btn'
-                    onClick={e => setDeleteModalOpen(false)}>
+                    onClick={e => e.preventDefault()}>
                     Don't Delete
                     </button>
 
@@ -302,4 +316,4 @@ const NewExerciseForm = props => {
 //ES6 export statement
 //export default Exercises;
 
-export default NewExerciseForm;
+export default ExerciseForm;

@@ -47,16 +47,19 @@ const Nav = () => {
                     </button>
 
                     <div id='nav-menu' className='open'>
+                    
+                    {/* <div className='header-spacer'><div></div></div> */}
+                    
 
                     <div><Link to="/">Home</Link></div>
                     <div><Link to="/contact">Contact</Link></div>
                     <div><Link to="/about">About</Link></div>
-                    <div><Link to="/contact">Contact</Link></div>
                     <div><Link to="/exercises">Exercises</Link></div>
                     <div><Link to="/menu">Menu</Link></div>
                     <div><Link to="/settings">Settings</Link></div>
                     <div><Link to="/userworkouts">User Workouts</Link></div>
                     <div><Link to="/workouts">Workouts</Link></div>
+                    
 
                     </div>
                 </>
@@ -67,17 +70,19 @@ const Nav = () => {
                         <img id='nav-status-icon' src={menuIcon} alt='hamburger menu icon'/>
                     </button>
                     <div id='nav-menu' className='close'>
+                    
+                    {/* <div className='header-spacer'><div></div></div> */}
 
                     <div><Link to="/">Home</Link></div>
                     <div><Link to="/contact">Contact</Link></div>
                     <div><Link to="/about">About</Link></div>
-                    <div><Link to="/contact">Contact</Link></div>
                     <div><Link to="/exercises">Exercises</Link></div>
                     <div><Link to="/menu">Menu</Link></div>
                     <div><Link to="/settings">Settings</Link></div>
                     <div><Link to="/userworkouts">User Workouts</Link></div>
                     <div><Link to="/workouts">Workouts</Link></div>
 
+                   
                     </div>
                 </>
                 

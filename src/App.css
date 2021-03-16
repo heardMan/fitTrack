@@ -55,6 +55,16 @@
   padding: 1rem;
 }
 
+.header-spacer {
+  padding: 1.5rem;
+}
+
+.header-spacer > div {
+  margin-left: auto;
+  margin-right: auto;
+  height: 50px!important;
+}
+
 /**
  * this controls the styling for the main application header logo in Header.js
  */
@@ -69,13 +79,10 @@
  * this controls the styling for the main application nav in Nav.js
  */
 
-#nav-menu >div>a{
-  text-decoration: none;
-  color: #DADFE1;
-}
+
 
 #nav-toggle {
-  z-index: 1000;
+  z-index: 1000!important;
   position: fixed;
   bottom:25px;
   right:25px;
@@ -105,30 +112,89 @@
  * this controls the styling for the menu-icon in Nav.js
  */
  #nav-menu {
-   position: fixed;
-   right: 0px;
-   bottom: 0px;
-   
-   
-   border-radius: 50%;
-   /* border: solid #DADFE1 2px; */
-   transform: translate(50%,50%);
-   background: rgb(46,49,49);
-   background: radial-gradient(circle, rgba(46,49,49,1) 30%, rgba(27,119,211,1) 70%);
-   
+  position: fixed;
+  bottom:0px;
+  right:0px;
+  overflow: hidden;
+  /* transform: translate(50%,50%); */
+  border-radius: 95% 0% 0% 0%;
+  
+  background-color: #1B77D3;
+  z-index: 999!important;
  }
 
+ #nav-menu > div > a{
+  text-decoration: none;
+  color: #DADFE1;
+  
+}
+
+#nav-menu >div:nth-child(1){
+  position: absolute;
+  top:20px;
+  right:20px;
+}
+
+#nav-menu >div:nth-child(2){
+  position: absolute;
+  top: 40px;
+  right:70px;
+}
+
+#nav-menu >div:nth-child(3){
+  position: absolute;
+  top:65px;
+  right:115px;
+}
+
+#nav-menu >div:nth-child(4){
+  position: absolute;
+  top:95px;
+  right:120px;
+}
+
+#nav-menu >div:nth-child(5){
+  position: absolute;
+  top:125px;
+  right:165px;
+}
+
+#nav-menu >div:nth-child(6){
+  position: absolute;
+  top:155px;
+  right:160px;
+}
+
+#nav-menu >div:nth-child(7){
+  position: absolute;
+  top:182px;
+  right:118px;
+}
+
+#nav-menu >div:nth-child(8){
+  position: absolute;
+  top:210px;
+  right:160px;
+}
+
+
+
  .open {
-  width: 500px!important;
-  height: 500px!important;
-  transition-duration: 2s;
+  /* clip-path: circle(100% at 100% 100%); */
+  transition: .65s ;
+  width: 250px;
+  height: 250px;
+  
  }
 
  .close {
-  width: 0px!important;
-  height: 0px!important;
-  transition-duration: 2s;
+  /* clip-path: circle(0% at 100% 100%); */
+  transition: .65s ;
+  width: 0px;
+  height: 0px;
+  border: none;
  }
+
 
 
  @keyframes grow {
@@ -416,4 +482,8 @@
 
 #footer {
   text-align: center;
+}
+
+.hide {
+  display: none;
 }

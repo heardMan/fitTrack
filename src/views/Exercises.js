@@ -17,7 +17,7 @@ const Exercises = () => {
         //in the main tag of the application
         <div id='exercises'>
             <Link id='new-exercise-link' to='/newexercise'>new exercise</Link>
-            <SearchableList endpoint={'exercise_templates'}/>
+            <SearchableList title={'exercises'} responseKey={'exercises'} endpoint={'exercise_templates'}/>
         </div >
         
     );
